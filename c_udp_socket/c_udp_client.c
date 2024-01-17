@@ -31,15 +31,18 @@ int main()
     int len = sizeof(serverAddr);
 
     while (1) {
-        // 輸入資料到 buffer
+        // 輸入資料到 buffer 換行才會停止讀取
         printf("Please input your message: ");
-        scanf("%s", buf);
+        if (fgets(buf, sizeof(buf), stdin) == NULL) {
+            printf("Error reading input\n");
+            break;
+        }
 
         // 傳送到 server 端
         sendto(socket_fd, buf, sizeof(buf), 0, (struct sockaddr *)&serverAddr, sizeof(serverAddr));
         
         // 接收到 exit 指令就退出迴圈
-        if (strcmp(buf, "exit") == 0) 
+        if (strncmp(buf, "exit", 4) == 0) 
             break;
 
         // 清空 message buffer

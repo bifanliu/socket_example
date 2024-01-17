@@ -10,15 +10,14 @@
 #define serverPort 48763
 
 char *convert(char *src) {
-    char *iter = src;
-    char *result = malloc(sizeof(src));
-    char *it = result;
-    if (iter == NULL) return iter;
-
-    while (*iter) {
-        *it++ = *iter++ & ~0x20;
+    int src_ctr = 0;
+    char *temp_src = malloc(sizeof(src));
+    while(src[src_ctr] != '\0'){
+        temp_src[src_ctr] = src[src_ctr] != ' ' ? toupper(src[src_ctr]) : src[src_ctr];
+        src_ctr++;
     }
-    return result;
+    temp_src[src_ctr] = '\0';
+    return temp_src;
 }
 
 int main(int argc , char *argv[])
@@ -58,7 +57,7 @@ int main(int argc , char *argv[])
         }
 
         // 收到 exit 指令就關閉 server
-        if (strcmp(buf, "exit") == 0) {
+        if (strncmp(buf, "exit", 4) == 0) {
             printf("get exit order, closing the server...\n");
             break;
         }

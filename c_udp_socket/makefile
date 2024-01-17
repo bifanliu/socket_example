@@ -1,6 +1,6 @@
 .PHONY: all
 
-c: c_udp_client c_udp_server
+all: c_udp_client c_udp_server
 
 c__udp_client: 
 	gcc -o c_udp_client c_udp_client.c
